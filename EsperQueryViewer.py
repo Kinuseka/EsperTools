@@ -1,6 +1,6 @@
 import requests
 import time
-from SPrettify import PrettyTable
+from SPrettify import PrettyLine
 history = [] #Atleast 99
 base = "http://esper.com"
 def main():
@@ -13,16 +13,16 @@ def main():
                     history.pop(0)
                 if query not in history:
                     history.append(query)
-                    table = PrettyTable()
+                    line = PrettyLine()
                     # table.define_spacing(20)
-                    table.add_line(query['time'], max_spacing=15)
+                    line.append_text(query['time'], max_spacing=15)
                     if (len(query['domain']) > 50):
-                        table.add_line(query['domain'], max_spacing=len(query['domain'])+5)
+                        line.append_text(query['domain'], max_spacing=len(query['domain'])+5)
                     else:
-                        table.add_line(query['domain'], max_spacing=50)
-                    table.add_line(query['client'], max_spacing=15)
-                    table.add_line('Blocked' if query['blocked'] else 'Pass', max_spacing=10)
-                    table()
+                        line.append_text(query['domain'], max_spacing=50)
+                    line.append_text(query['client'], max_spacing=15)
+                    line.append_text('Blocked' if query['blocked'] else 'Pass', max_spacing=10)
+                    line()
             time.sleep(1)
 
 if __name__ == "__main__":
